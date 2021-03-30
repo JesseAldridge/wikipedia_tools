@@ -7,8 +7,8 @@ import matplotlib.pyplot as plt
 
 
 def main(is_test):
-  STEPS = 2 if is_test else 9
-  LINKS_PER_NODE = 3
+  STEPS = 2 if is_test else 20
+  LINKS_PER_NODE = 2
 
 
   G = nx.Graph()

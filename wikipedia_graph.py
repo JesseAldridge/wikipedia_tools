@@ -1,4 +1,4 @@
-import random, sys
+import random, sys, time
 
 import wikipedia
 import networkx as nx
@@ -7,23 +7,26 @@ import matplotlib.pyplot as plt
 
 
 def main(is_test):
+  STEPS = 2 if is_test else 9
+  LINKS_PER_NODE = 3
+
+
   G = nx.Graph()
 
   print('loading first page...')
-  root_name = 'Chemistry'
+  root_name = 'Nutrition'
   page = wikipedia.page(root_name)
   G.add_node(root_name)
 
-  steps = 2 if is_test else 6
   all_node_names = []
-  for step in range(steps):
+  for step in range(STEPS):
     print(f'step {step}')
     all_node_names.append(root_name)
 
     print('adding nodes...')
     links = page.links
     random.shuffle(links)
-    links = links[:4]
+    links = links[:LINKS_PER_NODE]
 
     for i, _ in enumerate(links):
       truncated_link = links[i][:25] + ('...' if len(links[i]) > 25 else '')
@@ -46,14 +49,14 @@ def main(is_test):
 
   print('drawing graph...')
 
+  plt.figure(figsize=(10,7))
   ax1 = plt.subplot(111)
   ax1.margins(0.3)
 
   pos = nx.spring_layout(
     G,
-    k=0.1,
+    k=0.2,
   )
-
 
   nx.draw(
     G,
@@ -67,6 +70,7 @@ def main(is_test):
     pos=pos,
   )
 
+  # plt.savefig(f'{time.time()}.png')
   plt.show()
 
 def word_wrap(s, n=80):

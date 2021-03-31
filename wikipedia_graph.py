@@ -7,14 +7,14 @@ import matplotlib.pyplot as plt
 
 
 def main(is_test):
-  STEPS = 2 if is_test else 20
-  LINKS_PER_NODE = 2
+  STEPS = 2 if is_test else 30
+  LINKS_PER_NODE = 3
 
 
   G = nx.Graph()
 
   print('loading first page...')
-  root_name = 'Nutrition'
+  root_name = 'Social Economy'
   page = wikipedia.page(root_name)
   G.add_node(root_name)
 
@@ -40,6 +40,8 @@ def main(is_test):
     print('loading next page...')
     for _ in range(10):
       root_name = random.choice(all_node_names)
+      if '(identifier)' in root_name:
+        continue
       try:
         page = wikipedia.page(root_name)
       except:
@@ -55,7 +57,7 @@ def main(is_test):
 
   pos = nx.spring_layout(
     G,
-    k=0.2,
+    k=0.25,
   )
 
   nx.draw(

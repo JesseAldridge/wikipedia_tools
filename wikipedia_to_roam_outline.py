@@ -21,6 +21,8 @@ def walk_tree(root):
         return
     if child.classes and 'hatnote' in child.get('class'):
       continue
+    if child.classes and 'thumb' in child.get('class'):
+      continue
 
     for grandchild in walk_tree(child):
       yield grandchild
@@ -53,10 +55,10 @@ for child in walk_tree(root):
 
   # links
   elif(
-    child.tag == 'a' and headers and child.text and len(child.text) > 4 and
+    child.tag == 'a' and headers and child.text and len(child.text) > 3 and
     not re.match(r'\[[0-9]+\]', child.text)
   ):
-    if child.text.startswith('Jump to '):
+    if child.text.startswith('Jump to ') or child.text == 'edit':
       continue
     if child.text.startswith('Wikipedia articles with'):
       break

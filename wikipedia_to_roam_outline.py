@@ -19,6 +19,8 @@ def walk_tree(root):
     if child.tag == 'h2':
       if child.text == 'Navigation menu':
         return
+    if child.classes and 'hatnote' in child.get('class'):
+      continue
 
     for grandchild in walk_tree(child):
       yield grandchild
@@ -44,7 +46,7 @@ for child in walk_tree(root):
     headers.append(child)
 
   # headlines
-  elif child.tag == 'span' and child.classes and child.classes.pop() == 'mw-headline':
+  elif child.tag == 'span' and child.classes and 'mw-headline' in child.get('class'):
     print(f'{"  " * len(headers)}{child.text}')
 
   # links
@@ -52,6 +54,8 @@ for child in walk_tree(root):
     child.tag == 'a' and headers and child.text and len(child.text) > 4 and
     not re.match(r'\[[0-9]+\]', child.text)
   ):
+    if child.text.startswith('Jump to '):
+      continue
     if child.text.startswith('Wikipedia articles with'):
       break
-    print(f'{"  " * (len(headers) + 1)}{child.text}') #, {child.attrib["href"]}')
+    print(f'{"  " * (len(headers) + 1)}[[{child.text}]]') #, {child.attrib["href"]}')

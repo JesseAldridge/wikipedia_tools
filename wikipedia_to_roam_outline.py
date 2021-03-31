@@ -46,8 +46,10 @@ for child in walk_tree(root):
     headers.append(child)
 
   # headlines
-  elif child.tag == 'span' and child.classes and 'mw-headline' in child.get('class'):
-    print(f'{"  " * len(headers)}{child.text}')
+  elif(
+    child.tag == 'span' and child.classes and 'mw-headline' in child.get('class')
+  ):
+    print(f'{"  " * len(headers)}{child.text_content()}')
 
   # links
   elif(

@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import io, sys, re
 
 from lxml import html
@@ -55,7 +56,7 @@ for child in walk_tree(root):
 
   # links
   elif(
-    child.tag == 'a' and headers and child.text and len(child.text) > 3 and
+    child.tag == 'a' and headers and child.text and len(child.text) > 2 and
     not re.match(r'\[[0-9]+\]', child.text)
   ):
     if child.text.startswith('Jump to ') or child.text == 'edit':

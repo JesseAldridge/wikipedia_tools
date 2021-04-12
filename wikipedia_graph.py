@@ -14,7 +14,7 @@ def main(is_test):
   G = nx.Graph()
 
   print('loading first page...')
-  root_name = 'Social Economy'
+  root_name = sys.argv[-1]
   page = wikipedia.page(root_name)
   G.add_node(root_name)
 

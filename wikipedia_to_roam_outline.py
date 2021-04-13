@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import io, sys, re
+import io, sys, re, urllib.parse
 
 from lxml import html
 import requests
@@ -63,4 +63,8 @@ for child in walk_tree(root):
       continue
     if child.text.startswith('Wikipedia articles with'):
       break
-    print(f'{"  " * (len(headers) + 1)}[[{child.text}]]') #, {child.attrib["href"]}')
+    # print(f'{"  " * (len(headers) + 1)}[[{child.text}]]')
+    article_name = child.attrib["href"].split('/wiki/')[1]
+    article_name = re.sub('_', ' ', article_name)
+    article_name = urllib.parse(article_name)
+    print(f'{"  " * (len(headers) + 1)}[[{article_name}]]')
